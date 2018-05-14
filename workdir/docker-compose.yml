@@ -1,0 +1,87 @@
+version: '2'
+services:
+
+   nginxnlb:
+      build: ~/workdir/workdocker/Dockerfile/nginxnlb
+      image: valer/nginxnlb
+      hostname: nginxnlb
+      container_name: nginxnlb
+      ports:
+         - "8080:80"
+      volumes:
+         - ~/workdir/config/nginx:/etc/nginx/conf.d
+      links:
+         - app1:app1
+         - app2:app2
+
+   app1:
+      build: ~/workdir/workdocker/Dockerfile/application
+      image: valer/nodejsapp
+      environment:
+         - "MESSAGE=First instance"
+      hostname: app1
+      container_name: app1
+      ports:
+         - "8081:8080"
+
+   app2:
+      build: ~/workdir/workdocker/Dockerfile/application
+      image: valer/nodejsapp
+      environment:
+         - "MESSAGE=Second instance"
+      hostname: app2
+      container_name: app2
+      ports:
+         - "8082:8080"
+
+   elasticsearch:
+      image: elasticsearch
+      hostname: elasticsearch
+      container_name: elasticsearch
+
+   kibana:
+      image: kibana
+      hostname: kibana
+      container_name: kibana
+      ports:
+        -  5601:5601
+      links:
+         - elasticsearch:elasticsearch
+
+   logstash:
+      image: logstash
+      hostname: logstash
+      container_name: logstash
+      ports:
+        -  9500:9500
+      links:
+         - elasticsearch:elasticsearch
+      volumes:
+         - ~/workdir/config/logstash:/config-dir
+      command: logstash -f /config-dir/logstash.conf
+
+   nginxsrv:
+      build: ~/workdir/workdocker/Dockerfile/nginxsrv
+      image: valer/nginxsrv
+      hostname: nginxsrv
+      container_name: nginxsrv
+      ports:
+         - "9090:80"
+
+   httpd:
+      image: httpd
+      hostname: httpd
+      container_name: httpd
+      ports:
+        -  9080:80
+      volumes:
+         - ~/workdir/public_html/httpd:/usr/local/apache2/htdocs
+
+   mysql:
+      image: mysql
+      hostname: mysql
+      container_name: mysql
+      ports:
+        -  3306:3306
+      volumes:
+         - ~/workdir/db/mysql_data:/var/lib/mysql

@@ -35,15 +35,15 @@ $ docker-compose up -d
 
 Containers:
 
-- elasticsearch  :9200 :9300
-- logstash       :9500
-- kibana         :5601
-- nginxnlb       :8080
-- app1           :8081
-- app2           :8082
-- nginxsrv       :9090
-- mysql          :3306
-- httpd          :9080
+- elasticsearch		:9200 :9300
+- logstash		:9500
+- kibana		:5601
+- nginxnlb		:8080
+- app1			:8081
+- app2			:8082
+- nginxsrv		:9090
+- mysql			:3306
+- httpd			:9080
 
 
 Cherck container to be up and running
@@ -51,6 +51,7 @@ Cherck container to be up and running
 $ docker ps -a
 ```
 
+```
     Name                   Command               State           Ports
 -------------------------------------------------------------------------------
 app1            node /usr/src/app/index          Up      0.0.0.0:8081->8080/tcp
@@ -62,7 +63,7 @@ logstash        /docker-entrypoint.sh logs ...   Up      0.0.0.0:9500->9500/tcp
 mysql           docker-entrypoint.sh mysqld      Up      0.0.0.0:3306->3306/tcp
 nginxnlb        nginx -g daemon off;             Up      0.0.0.0:8080->80/tcp
 nginxsrv        nginx -g daemon off;             Up      0.0.0.0:9090->80/tcp
-
+```
 
 Verifying if work:
 
