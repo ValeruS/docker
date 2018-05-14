@@ -35,6 +35,7 @@ $ docker-compose up -d
 
 Containers:
 
+```
 - elasticsearch		:9200 :9300
 - logstash		:9500
 - kibana		:5601
@@ -44,7 +45,7 @@ Containers:
 - nginxsrv		:9090
 - mysql			:3306
 - httpd			:9080
-
+```
 
 Cherck container to be up and running
 ```
@@ -91,8 +92,8 @@ $ docker exec -it mysql bash
 ```
 
 * ELK
-- Logstash TCP Input. 
-- NOTE: You need to inject data into Logstash before being able to configure a Logstash index pattern via the Kibana web UI.
+* Logstash TCP Input. 
+* NOTE: You need to inject data into Logstash before being able to configure a Logstash index pattern via the Kibana web UI.
 ```
 $ nc localhost 9500
 testasdlfhafh
